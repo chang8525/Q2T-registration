@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
-    /* 全站基本設定 */
     * {
       box-sizing: border-box;
     }
@@ -73,7 +72,6 @@
       margin-right: 10px;
     }
 
-    /* 表單樣式 */
     form {
       margin-top: 18px;
     }
@@ -182,7 +180,6 @@
       display: block;
     }
 
-    /* RWD */
     @media (max-width: 480px) {
       .card {
         padding: 22px 16px 18px;
@@ -199,20 +196,20 @@
   <div class="card">
     <div class="card-header">
       <div class="tag">活動報名</div>
-      <!-- 這裡改成你的活動名稱 -->
       <h1>XX 活動報名表</h1>
-      <!-- 這裡改成你的活動簡介 -->
       <p class="subtitle">
         歡迎報名參加！請填寫以下資料，我們會在審核後寄信通知你相關資訊。
       </p>
-      <!-- 活動資訊（可依需要修改或刪除） -->
       <p class="meta">
         <span>📅 活動日期：2025 / 01 / 18（六）</span>
         <span>📍 地點：台北市 XX 路 XX 號</span>
       </p>
     </div>
 
-    <form id="signup-form">
+    <!-- ✅ 改成連接 Formspree -->
+    <form id="signup-form" action="https://formspree.io/f/manawkzy" method="POST">
+      <input type="hidden" name="_subject" value="Q2T 活動報名">
+
       <div class="form-group">
         <label for="name">姓名<span class="req">*</span></label>
         <input type="text" id="name" name="name" required placeholder="請輸入你的姓名">
@@ -249,39 +246,41 @@
           送出報名
           <span>↗</span>
         </button>
-        <span class="note">本頁面為示範用，實際報名以主辦單位通知為主。</span>
+        <span class="note">本頁面為正式報名表，主辦單位將寄信通知為主。</span>
       </div>
 
       <div id="success" class="success-message">
-        ✅ 已送出（示範）：你的報名資料已送出！如果這是正式活動，主辦單位會再寄信與你聯繫。
+        ✅ 你的報名資料已成功送出！我們會盡快與你聯絡。
       </div>
     </form>
   </div>
 </div>
 
 <script>
-  // 簡單前端處理：避免真的送出、顯示成功訊息
   const form = document.getElementById('signup-form');
   const success = document.getElementById('success');
 
-  form.addEventListener('submit', function (event) {
-    event.preventDefault(); // 不送到伺服器
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-    // 這裡可以加簡單檢查（必填欄位瀏覽器已經幫你檢查了）
-    const name = document.getElementById('name').value.trim();
+    const formData = new FormData(form);
 
-    if (!name) {
-      alert('請填寫姓名');
-      return;
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        success.classList.add('show');
+        form.reset();
+      } else {
+        alert('送出失敗，請稍後再試。');
+      }
+    } catch (error) {
+      alert('送出時發生錯誤，請稍後再試。');
     }
-
-    // Demo：顯示成功訊息，並清空表單
-    success.classList.add('show');
-    form.reset();
-
-    // 如果未來你要真的把資料送出去，可以在這裡改成：
-    // fetch('你的後端 API 或表單服務網址', {...})
-    // 或改成 location.href = '你的感謝頁面.html'
   });
 </script>
 </body>
