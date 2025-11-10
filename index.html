@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>活動報名表 | Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    /* 全站基本設定 */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      background: #f4f4f5;
+      color: #111827;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 28px 24px 24px;
+      box-shadow: 0 15px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .card-header {
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: #eef2ff;
+      color: #4f46e5;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 4px 0 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 10px;
+    }
+
+    .meta span {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    /* 表單樣式 */
+    form {
+      margin-top: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    label span.req {
+      color: #ef4444;
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 9px 10px;
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid #d4d4d8;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+      background: #f9fafb;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+      background: #ffffff;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 3px;
+    }
+
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button[type="submit"] {
+      border: none;
+      cursor: pointer;
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      background: #4f46e5;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.25);
+    }
+
+    button[type="submit"]:hover {
+      background: #4338ca;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(79, 70, 229, 0.3);
+    }
+
+    button[type="submit"]:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 14px rgba(79, 70, 229, 0.2);
+    }
+
+    .note {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .success-message {
+      display: none;
+      margin-top: 12px;
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #ecfdf3;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    /* RWD */
+    @media (max-width: 480px) {
+      .card {
+        padding: 22px 16px 18px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div class="card-header">
+      <div class="tag">活動報名</div>
+      <!-- 這裡改成你的活動名稱 -->
+      <h1>XX 活動報名表</h1>
+      <!-- 這裡改成你的活動簡介 -->
+      <p class="subtitle">
+        歡迎報名參加！請填寫以下資料，我們會在審核後寄信通知你相關資訊。
+      </p>
+      <!-- 活動資訊（可依需要修改或刪除） -->
+      <p class="meta">
+        <span>📅 活動日期：2025 / 01 / 18（六）</span>
+        <span>📍 地點：台北市 XX 路 XX 號</span>
+      </p>
+    </div>
+
+    <form id="signup-form">
+      <div class="form-group">
+        <label for="name">姓名<span class="req">*</span></label>
+        <input type="text" id="name" name="name" required placeholder="請輸入你的姓名">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email<span class="req">*</span></label>
+        <input type="email" id="email" name="email" required placeholder="用來寄送活動通知">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">聯絡電話<span class="req">*</span></label>
+        <input type="text" id="phone" name="phone" required placeholder="例如：09xx-xxx-xxx">
+      </div>
+
+      <div class="form-group">
+        <label for="session">想報名的場次<span class="req">*</span></label>
+        <select id="session" name="session" required>
+          <option value="">請選擇</option>
+          <option value="morning">上午場（10:00 – 12:00）</option>
+          <option value="afternoon">下午場（14:00 – 16:00）</option>
+          <option value="full">整天活動</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="note">備註</label>
+        <textarea id="note" name="note" placeholder="有任何飲食需求、特殊狀況或想跟主辦單位說的話都可以填在這裡"></textarea>
+        <p class="hint">例如：不吃牛、需提供插座、想與朋友同組等。</p>
+      </div>
+
+      <div class="actions">
+        <button type="submit">
+          送出報名
+          <span>↗</span>
+        </button>
+        <span class="note">本頁面為示範用，實際報名以主辦單位通知為主。</span>
+      </div>
+
+      <div id="success" class="success-message">
+        ✅ 已送出（示範）：你的報名資料已送出！如果這是正式活動，主辦單位會再寄信與你聯繫。
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // 簡單前端處理：避免真的送出、顯示成功訊息
+  const form = document.getElementById('signup-form');
+  const success = document.getElementById('success');
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault(); // 不送到伺服器
+
+    // 這裡可以加簡單檢查（必填欄位瀏覽器已經幫你檢查了）
+    const name = document.getElementById('name').value.trim();
+
+    if (!name) {
+      alert('請填寫姓名');
+      return;
+    }
+
+    // Demo：顯示成功訊息，並清空表單
+    success.classList.add('show');
+    form.reset();
+
+    // 如果未來你要真的把資料送出去，可以在這裡改成：
+    // fetch('你的後端 API 或表單服務網址', {...})
+    // 或改成 location.href = '你的感謝頁面.html'
+  });
+</script>
+</body>
+</html>
